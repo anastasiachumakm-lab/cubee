@@ -1,129 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>3D Cube Carousel</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Cube Carousel</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
-  <style>
-    :root{
-      --r: 18px;          /* радіус */
-      --h: 340px;         /* висота на ПК */
-      --h-m: 250px;       /* висота на моб */
-      --dot: 8px;         /* розмір крапок */
-    }
+<style>
+body{
+  margin:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background: linear-gradient(135deg,#f5f7fa,#e4ecf7);
+  font-family: sans-serif;
+}
 
-    /* НІЯКИХ “рамок/коробок” */
-    body{ margin:0; background:transparent; font-family: Arial, system-ui, sans-serif; }
-    .wrap{ width:100%; margin:0; padding:0; }
+.container{
+  width:90%;
+  max-width:900px;
+}
 
-    /* Сам блок каруселі */
-    .swiper{
-      width:100%;
-      height: var(--h);
-      border-radius: var(--r);
-      overflow: hidden;
-      background: #f3f4f6;                 /* щоб не було білих миготінь */
-      transform: translateZ(0);
-    }
+.swiper{
+  width:100%;
+  height:520px;
+  border-radius:20px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow: 0 25px 60px rgba(0,0,0,.18);
+}
 
-    .swiper-slide{ background:#f3f4f6; }
-    .swiper-slide img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      display:block;
-      transform: scale(1.01);
-    }
+.swiper-slide{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#fff;
+}
 
-    /* Преміум “світло” поверх (дуже легке, як фото-плівка) */
-    .swiper::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background: radial-gradient(120% 80% at 35% 10%,
-        rgba(255,255,255,.28),
-        rgba(255,255,255,0) 55%);
-      mix-blend-mode: screen;
-      opacity: .6;
-    }
+.swiper-slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:20px;
+}
 
-    /* Крапки */
-    .swiper-pagination{
-      bottom: 10px !important;
-    }
-    .swiper-pagination-bullet{
-      width: var(--dot);
-      height: var(--dot);
-      opacity: .35;
-      transform: scale(.95);
-    }
-    .swiper-pagination-bullet-active{
-      opacity: 1;
-      transform: scale(1.05);
-    }
+/* кнопки */
+.swiper-button-next,
+.swiper-button-prev{
+  color:#1e3a8a;
+}
 
-    /* Мобільна адаптація */
-    @media (max-width: 720px){
-      .swiper{ height: var(--h-m); border-radius: 16px; }
-    }
-
-    /* якщо людина не любить анімації */
-    @media (prefers-reduced-motion: reduce){
-      .swiper{ scroll-behavior:auto; }
-    }
-  </style>
+.swiper-pagination-bullet{
+  background:#1e3a8a;
+}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="swiper myCube">
-      <div class="swiper-wrapper">
 
-        <div class="swiper-slide">
-          <img alt="Фото 1" src="https://drive.google.com/thumbnail?id=1jHmpowbKRb8w5xvLNL6H9voj4you8JXB&sz=w1600">
-        </div>
+<div class="container">
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
 
-        <div class="swiper-slide">
-          <img alt="Фото 2" src="https://drive.google.com/thumbnail?id=1K4ggAheTAI8GGmnyR_-nx97hVOQyaa_N&sz=w1600">
-        </div>
-
-        <div class="swiper-slide">
-          <img alt="Фото 3" src="https://drive.google.com/thumbnail?id=10K8tR3ej4N4j0A0CJUvsreex2lcta69u&sz=w1600">
-        </div>
-
+      <!-- ЗАМІНИ посилання на свої фото -->
+      <div class="swiper-slide">
+        <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70" />
       </div>
 
-      <div class="swiper-pagination"></div>
+      <div class="swiper-slide">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" />
+      </div>
+
+      <div class="swiper-slide">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" />
+      </div>
+
     </div>
+
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
   </div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script>
-    const swiper = new Swiper('.myCube', {
-      effect: 'cube',
-      loop: true,
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-      /* плавно і “дорого” */
-      speed: 900,
+<script>
+var swiper = new Swiper(".mySwiper", {
+  effect: "cube",
+  grabCursor: true,
+  loop: true,
+  cubeEffect: {
+    shadow: true,
+    slideShadows: false,
+    shadowOffset: 20,
+    shadowScale: 0.92,
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+});
+</script>
 
-      /* автопрокрутка */
-      autoplay: { delay: 2600, disableOnInteraction: false },
-
-      /* щоб не було “тіні-коробки” */
-      cubeEffect: {
-        shadow: false,
-        slideShadows: false
-      },
-
-      /* хочеш можна свайпати, як у телефоні */
-      grabCursor: true,
-
-      pagination: { el: '.swiper-pagination', clickable: true },
-    });
-  </script>
 </body>
 </html>
