@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="uk">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Cube</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cube 380x240</title>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
@@ -16,37 +16,39 @@ html,body{
   font-family:Arial, sans-serif;
 }
 
-/* Менший блок */
+/* Даємо простір для повороту і тіні */
 .wrapper{
   width:100%;
   display:flex;
   justify-content:center;
+  padding:18px 18px 36px; /* запас з боків і знизу */
   overflow:visible;
-  padding-bottom:30px; /* місце для тіні */
 }
 
-/* РОЗМІР КАРУСЕЛІ */
+/* РОЗМІР */
 .swiper{
-  width:380px;          /* ← МЕНШИЙ РОЗМІР */
-  max-width:100%;
-  height:240px;         /* ← МЕНША ВИСОТА */
+  width:380px;
+  height:240px;
   overflow:visible !important;
   background:transparent;
+  position:relative;
 }
 
-/* Без округлень */
+/* Забираємо будь-які округлення */
 .swiper *,
 .swiper-slide,
 .swiper-slide img{
   border-radius:0 !important;
 }
 
+/* Фото */
 .swiper-slide img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
   background:#fff;
+  transform: scale(0.985); /* невеликий запас щоб не підрізало */
 }
 
 /* Крапки */
@@ -60,6 +62,19 @@ html,body{
 }
 .swiper-pagination-bullet-active{
   opacity:1;
+}
+
+/* Додаткова м’яка підсвітка під кубом */
+.swiper::after{
+  content:"";
+  position:absolute;
+  left:10%;
+  right:10%;
+  bottom:-22px;
+  height:28px;
+  background:radial-gradient(closest-side, rgba(0,0,0,.28), rgba(0,0,0,0));
+  filter:blur(6px);
+  pointer-events:none;
 }
 </style>
 </head>
@@ -99,9 +114,9 @@ new Swiper('.myCube', {
   autoplay: { delay: 2600, disableOnInteraction: false },
 
   cubeEffect: {
-    shadow: true,
-    slideShadows: true,
-    shadowOffset: 20,
+    shadow: true,         // тінь під кубом
+    slideShadows: true,   // тіні на гранях
+    shadowOffset: 22,
     shadowScale: 0.9
   },
 
@@ -111,4 +126,3 @@ new Swiper('.myCube', {
 
 </body>
 </html>
-
