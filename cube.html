@@ -8,81 +8,71 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
   <style>
-    body{
-      margin:0;
-      background: transparent; /* щоб у Google Sites не було “вікна” */
-      font-family: Arial, system-ui, sans-serif;
-    }
+    /* щоб нічого не різалось */
+    html, body { margin:0; padding:0; background:transparent; overflow:visible; }
 
-    /* ВАЖЛИВО: НІЧОГО НЕ Обрізаємо */
-    .stage{
+    /* Адаптивний блок: ширина 100%, висота автоматом від ширини */
+    .embed{
       width:100%;
-      padding: 0;              /* можна 10px якщо хочеш більше “повітря” */
-      overflow: visible !important;
-      background: transparent;
+      overflow:visible;
+      background:transparent;
+      padding-bottom: 34px; /* МІСЦЕ ДЛЯ ТІНІ (важливо!) */
+      box-sizing:border-box;
     }
 
     /* Сам слайдер */
     .swiper{
       width:100%;
-      height: 360px;           /* можеш змінити */
-      overflow: visible !important; /* щоб тінь куба виходила */
+      aspect-ratio: 16 / 9;     /* <-- головне для масштабування */
+      height:auto !important;   /* висота від ширини */
+      overflow: visible !important;
       background: transparent;
-      position: relative;
-      transform: translateZ(0);
+      border-radius: 0 !important; /* НІЯКИХ округлень */
+    }
+
+    /* Усе без округлень */
+    .swiper *{
+      border-radius: 0 !important;
     }
 
     .swiper-slide{
       background: transparent;
+      border-radius: 0 !important;
     }
 
-    /* Фото без округлень */
     .swiper-slide img{
       width:100%;
       height:100%;
       object-fit: cover;
       display:block;
+      border-radius: 0 !important;
       user-select:none;
       -webkit-user-drag:none;
-      background: #fff;
+      background:#fff;
     }
 
-    /* ДОДАТКОВИЙ ОБ’ЄМ: легка “сцена” (не рамка!) */
-    .swiper::before{
-      content:"";
-      position:absolute;
-      left: 6%;
-      right: 6%;
-      bottom: -18px;
-      height: 26px;
-      background: radial-gradient(closest-side, rgba(0,0,0,.22), rgba(0,0,0,0));
-      filter: blur(4px);
-      opacity: .9;
-      pointer-events:none;
-      z-index: -1; /* щоб не накривало куб */
-    }
-
-    /* Крапки */
+    /* КРАПКИ */
     .swiper-pagination{
-      bottom: 10px !important;
+      bottom: 8px !important;
     }
     .swiper-pagination-bullet{
-      width: 8px;
-      height: 8px;
-      opacity: .35;
+      width:8px;
+      height:8px;
+      opacity:.35;
     }
     .swiper-pagination-bullet-active{
-      opacity: 1;
+      opacity:1;
     }
 
-    @media (max-width:720px){
-      .swiper{ height: 260px; }
+    /* Якщо дуже вузько — робимо “вищий” кадр */
+    @media (max-width:520px){
+      .swiper{ aspect-ratio: 4 / 3; }
     }
   </style>
 </head>
 
 <body>
-  <div class="stage">
+  <div class="embed">
     <div class="swiper myCube">
       <div class="swiper-wrapper">
 
@@ -113,12 +103,12 @@
       grabCursor: true,
       autoplay: { delay: 2600, disableOnInteraction: false },
 
-      /* ОЦЕ ДАЄ “ОБ’ЄМ” */
+      /* ТІНЬ + ОБ’ЄМ */
       cubeEffect: {
-        shadow: true,          // тінь-підлога
-        slideShadows: true,    // “глибина” на гранях
-        shadowOffset: 24,
-        shadowScale: 0.9
+        shadow: true,          // тінь “під кубом”
+        slideShadows: true,    // тіні на гранях (дає об’єм)
+        shadowOffset: 26,
+        shadowScale: 0.92
       },
 
       pagination: { el: '.swiper-pagination', clickable: true },
@@ -126,4 +116,3 @@
   </script>
 </body>
 </html>
-
