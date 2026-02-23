@@ -1,113 +1,120 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3D Cube Carousel</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>3D Cube Carousel</title>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
-<style>
-body{
-  margin:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  background: linear-gradient(135deg,#f5f7fa,#e4ecf7);
-  font-family: sans-serif;
-}
+  <style>
+    :root{
+      --r: 18px;
+      --h: 340px;
+      --h-m: 250px;
+      --dot: 8px;
+    }
 
-.container{
-  width:90%;
-  max-width:900px;
-}
+    body{
+      margin:0;
+      background: transparent; /* для Google Sites */
+      font-family: Arial, system-ui, sans-serif;
+    }
 
-.swiper{
-  width:100%;
-  height:520px;
-  border-radius:20px;
-  overflow:hidden;
-  background:#fff;
-  box-shadow: 0 25px 60px rgba(0,0,0,.18);
-}
+    /* ОЦЕ ВАЖЛИВО:
+       Маска (обрізання) окремо, а Swiper з overflow:visible */
+    .mask{
+      width:100%;
+      border-radius: var(--r);
+      overflow: hidden;         /* обрізаємо тільки картинки */
+      background: #f3f4f6;
+    }
 
-.swiper-slide{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#fff;
-}
+    .swiper{
+      width:100%;
+      height: var(--h);
+      overflow: visible !important; /* НЕ обрізати тінь куба */
+      position: relative;
+      background: transparent;
+    }
 
-.swiper-slide img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:20px;
-}
+    .swiper-slide{
+      background: #f3f4f6;
+    }
 
-/* кнопки */
-.swiper-button-next,
-.swiper-button-prev{
-  color:#1e3a8a;
-}
+    .swiper-slide img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.01);
+      user-select: none;
+      -webkit-user-drag: none;
+    }
 
-.swiper-pagination-bullet{
-  background:#1e3a8a;
-}
-</style>
+    /* Крапки */
+    .swiper-pagination{
+      bottom: 10px !important;
+    }
+    .swiper-pagination-bullet{
+      width: var(--dot);
+      height: var(--dot);
+      opacity: .35;
+    }
+    .swiper-pagination-bullet-active{
+      opacity: 1;
+    }
+
+    @media (max-width:720px){
+      .swiper{ height: var(--h-m); }
+      :root{ --r: 16px; }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Маска обрізає контент, але тінь куба НЕ відріже -->
+  <div class="mask">
+    <div class="swiper myCube">
+      <div class="swiper-wrapper">
 
-<div class="container">
-  <div class="swiper mySwiper">
-    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img alt="Фото 1" src="https://drive.google.com/thumbnail?id=1jHmpowbKRb8w5xvLNL6H9voj4you8JXB&sz=w1600">
+        </div>
 
-      <!-- ЗАМІНИ посилання на свої фото -->
-      <div class="swiper-slide">
-        <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70" />
+        <div class="swiper-slide">
+          <img alt="Фото 2" src="https://drive.google.com/thumbnail?id=1K4ggAheTAI8GGmnyR_-nx97hVOQyaa_N&sz=w1600">
+        </div>
+
+        <div class="swiper-slide">
+          <img alt="Фото 3" src="https://drive.google.com/thumbnail?id=10K8tR3ej4N4j0A0CJUvsreex2lcta69u&sz=w1600">
+        </div>
+
       </div>
 
-      <div class="swiper-slide">
-        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" />
-      </div>
-
-      <div class="swiper-slide">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" />
-      </div>
-
+      <div class="swiper-pagination"></div>
     </div>
-
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-pagination"></div>
   </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    new Swiper('.myCube', {
+      effect: 'cube',
+      loop: true,
+      speed: 900,
+      grabCursor: true,
+      autoplay: { delay: 2600, disableOnInteraction: false },
 
-<script>
-var swiper = new Swiper(".mySwiper", {
-  effect: "cube",
-  grabCursor: true,
-  loop: true,
-  cubeEffect: {
-    shadow: true,
-    slideShadows: false,
-    shadowOffset: 20,
-    shadowScale: 0.92,
-  },
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-  },
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-});
-</script>
+      /* ТІНЬ ВКЛЮЧЕНА */
+      cubeEffect: {
+        shadow: true,
+        slideShadows: false,  // без “чорних країв”
+        shadowOffset: 18,
+        shadowScale: 0.94
+      },
 
+      pagination: { el: '.swiper-pagination', clickable: true },
+    });
+  </script>
 </body>
 </html>
